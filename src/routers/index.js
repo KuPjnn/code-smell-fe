@@ -8,7 +8,7 @@ import {
 } from '@/auth/auth.js';
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory("/blog/"),
     routes: [
         // Web routes
         {
