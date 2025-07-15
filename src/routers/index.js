@@ -8,7 +8,7 @@ import {
 } from '@/auth/auth.js';
 
 const router = createRouter({
-    history: createWebHistory("/blog/"),
+    history: createWebHistory(`${import.meta.env.VITE_BASE_PATH}`),
     routes: [
         // Web routes
         {

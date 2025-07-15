@@ -13,7 +13,7 @@ export default defineConfig(({mode}) => {
     const env = loadEnv(mode, process.cwd(), '')
 
     return {
-        base: '/blog/',
+        base: env.VITE_BASE_PATH,
         plugins: [
             vue(),
             tailwindcss(),

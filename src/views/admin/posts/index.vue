@@ -5,7 +5,7 @@
         v-loading="isListLoading"
         style="width: 100%;"
     >
-      <el-table-column label="ID" prop="id" #default="{row}" min-width="50" fixed>
+      <el-table-column label="ID" prop="id" #default="{row}" min-width="50">
         <span>{{ row.id }}</span>
       </el-table-column>
       <el-table-column label="Title" prop="title" #default="{row}" min-width="150">
@@ -23,9 +23,17 @@
         <el-tag type="primary" effect="dark" v-else-if="row.status === postStatus.PUBLISHED">Published</el-tag>
         <el-tag type="danger" effect="dark" v-else-if="row.status === postStatus.ARCHIVED">Archived</el-tag>
       </el-table-column>
-      <el-table-column label="Created Date" prop="createdDate" min-width="120"/>
+      <el-table-column label="Created Date" prop="createdDate" min-width="120">
+        <template #default="{ row }">
+          {{ formatDate(row.createdDate) }}
+        </template>
+      </el-table-column>
       <el-table-column label="Created By" prop="createdBy" min-width="120"/>
-      <el-table-column label="Updated Date" prop="updatedDate" min-width="120"/>
+      <el-table-column label="Updated Date" prop="updatedDate" min-width="120">
+        <template #default="{ row }">
+          {{ formatDate(row.updatedDate) }}
+        </template>
+      </el-table-column>
       <el-table-column label="Updated By" prop="updatedBy" min-width="120"/>
       <el-table-column align="right" min-width="150" fixed="right">
         <template #default="{row}">
@@ -79,6 +87,7 @@ import {postStatus} from "@/utils/PostStatus.js";
 import {ElMessage} from "element-plus";
 import {MdPreview, MdCatalog} from "md-editor-v3";
 import 'md-editor-v3/lib/preview.css';
+import {formatDate} from "@/utils/Utils.js";
 
 const defaultPostPage = {
   content: [],
@@ -121,6 +130,7 @@ export default {
     this.getList(this.pageRequest);
   },
   methods: {
+    formatDate,
     getList(pageRequest) {
       this.isListLoading = true;
       getPosts(pageRequest).then(result => {

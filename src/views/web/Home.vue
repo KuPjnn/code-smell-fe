@@ -19,7 +19,7 @@
                 </el-tag>
                 <span class="text-gray-500 text-sm ml-2">
                   <el-icon><Calendar/></el-icon>
-                  {{ post.updatedDate }}
+                  {{ formatFromNow(post.updatedDate) }}
                 </span>
               </div>
               <h2 class="text-xl font-medium hover:text-primary-500 mb-2">
@@ -62,7 +62,7 @@
                   <el-icon class="mr-1">
                     <Calendar/>
                   </el-icon>
-                  {{ post.updatedDate }}
+                  {{ formatFromNow(post.updatedDate) }}
                 </div>
               </div>
             </article>
@@ -80,6 +80,7 @@
 import {getPosts} from "@/api/post.js";
 import {ElMessage} from "element-plus";
 import {Calendar, CollectionTag, Star} from "@element-plus/icons-vue";
+import {formatFromNow} from "@/utils/Utils.js";
 
 const defaultPostPage = {
   content: [],
@@ -112,6 +113,7 @@ export default {
     }
   },
   methods: {
+    formatFromNow,
     getPosts(pageRequest) {
       getPosts(pageRequest).then(result => {
         this.posts = result.data.data;
