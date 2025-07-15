@@ -202,7 +202,7 @@ export default {
           });
     },
     handleFileRemove(file) {
-      deleteFile(file.name)
+      deleteFile(`${this.folderPath}${file.name}`)
           .then(result => {
             ElMessage.success(result.data.message);
           })
