@@ -2,6 +2,7 @@ import {fileURLToPath, URL} from 'node:url'
 
 import {defineConfig, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { createHtmlPlugin } from 'vite-plugin-html'
 import AutoImport from 'unplugin-auto-import/vite'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import tailwindcss from '@tailwindcss/vite'
@@ -16,6 +17,7 @@ export default defineConfig(({mode}) => {
         base: env.VITE_BASE_PATH,
         plugins: [
             vue(),
+            createHtmlPlugin(),
             tailwindcss(),
             AutoImport({
                 resolvers: [ElementPlusResolver()],

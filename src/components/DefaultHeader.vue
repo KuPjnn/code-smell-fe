@@ -29,8 +29,9 @@
     <el-sub-menu index="/" v-if="isLogin">
       <template #title>
         <el-avatar
-            :src="Constant.DOWNLOAD_FILE_URL+`?path=avatar/avatar.jpg`"
+            :src="user.picture"
         />
+        <span>{{ user.name }}</span>
       </template>
       <el-menu-item index="/admin" route="/admin">
         Admin
@@ -49,9 +50,10 @@
 </template>
 
 <script>
-import {getKeycloakAuthUrl, isAuthenticated, logout} from "@/auth/auth";
+import {getAuthenticationUrl, isAuthenticated, logout} from "@/auth/auth";
 import {ArrowRight, Search, Tools, User} from "@element-plus/icons-vue";
 import {Constant} from "@/utils/Constant.js";
+import {useAuthStore} from "@/store";
 
 export default {
   computed: {
@@ -65,18 +67,19 @@ export default {
   },
   data() {
     return {
-      isLogin: false
+      isLogin: false,
+      user: useAuthStore().currentUser,
     }
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
     },
-    login() {
-      window.location.href = getKeycloakAuthUrl();
+    async login() {
+      window.location.href = await getAuthenticationUrl();
     },
-    logout() {
-      logout();
+    async logout() {
+      await logout();
     },
   }
 }

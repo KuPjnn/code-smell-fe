@@ -1,14 +1,8 @@
 import {createAcl, defineAclRules} from 'vue-simple-acl';
 import router from "@/routers";
+import {getUserInfo} from "@/auth/auth.js";
 
-const user = {
-    id: 1,
-    name: 'Code Smell',
-    is_editor: false,
-    is_admin: true,
-    // you can have role based permission list or access control list possibly from database
-    permissions: ['admin', 'owner', 'moderator', 'create-post', 'edit-post', 'delete-post']
-}
+export const user = await getUserInfo();
 
 const rules = () => defineAclRules((setRule) => {
     // setRule('unique-ability', callbackFunction(user, arg1, arg2, ...) { });

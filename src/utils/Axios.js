@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getKeycloakAuthUrl, isAuthenticated, refreshToken} from '@/auth/auth.js';
+import {getAuthenticationUrl, isAuthenticated, refreshToken} from '@/auth/auth.js';
 
 // Create an Axios instance
 const request = axios.create({
@@ -28,9 +28,9 @@ request.interceptors.response.use((response) => {
         // Refresh the token if access is unauthorized
         await refreshToken().then((response) => {
             error.config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-        }).catch((error) => {
+        }).catch(async (error) => {
             console.error('Token refresh failed', error);
-            window.location.href = getKeycloakAuthUrl();  // Redirect to login
+            window.location.href = await getAuthenticationUrl();  // Redirect to login
         });
         return axios.request(error.config);
     }

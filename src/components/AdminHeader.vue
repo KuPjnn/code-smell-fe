@@ -8,7 +8,8 @@
   >
     <el-sub-menu index="/admin">
       <template #title>
-        <el-avatar :src="Constant.DOWNLOAD_FILE_URL+`?path=avatar/avatar.jpg`"/>
+        <el-avatar :src="user.picture"/>
+        <span>{{ user.name }}</span>
       </template>
       <el-menu-item index="/" @click="logout">
         <span>Logout</span>
@@ -25,8 +26,14 @@
 import {logout} from "@/auth/auth";
 import {ArrowRight} from "@element-plus/icons-vue";
 import {Constant} from "../utils/Constant.js";
+import {useAuthStore} from "@/store/index.js";
 
 export default {
+  data() {
+    return {
+      user: useAuthStore().currentUser,
+    };
+  },
   computed: {
     Constant() {
       return Constant
@@ -34,8 +41,8 @@ export default {
   },
   components: {ArrowRight},
   methods: {
-    logout() {
-      logout();
+    async logout() {
+      await logout();
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath)

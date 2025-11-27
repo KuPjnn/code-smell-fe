@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import {
     exchangeCodeForToken,
-    getKeycloakAuthUrl,
+    getAuthenticationUrl,
     getRedirectUrl,
     isAuthenticated,
     saveRedirectUrl
@@ -45,6 +45,13 @@ const router = createRouter({
                     component: () => import('@/views/web/Explore.vue'),
                     meta: {
                         title: 'Explore',
+                    }
+                },
+                {
+                    path: '/callback',
+                    component: () => import('@/views/web/Home.vue'),
+                    meta: {
+                        title: 'Callback',
                     }
                 },
             ]
@@ -142,14 +149,14 @@ router.beforeEach(async (to) => {
                 return getRedirectUrl();
             } catch (error) {
                 console.error('Token exchange failed', error);
-                window.location.href = getKeycloakAuthUrl();
+                window.location.href = await getAuthenticationUrl();
             }
         }
     }
 
     if (to.meta.requiresAuth && !await isAuthenticated()) {
         await saveRedirectUrl();
-        window.location.href = getKeycloakAuthUrl();
+        window.location.href = await getAuthenticationUrl();
     }
     return true;
 });

@@ -12,30 +12,38 @@
                      class="post-link">
           <div class="post-card mb-6">
             <article class="post-item transition-all hover:transform hover:translate-y-[-2px]">
-              <!-- Existing post content -->
-              <div class="post-header mb-2">
-                <el-tag size="small" type="success" class="category-tag">
-                  {{ post.category.name }}
-                </el-tag>
-                <span class="text-gray-500 text-sm ml-2">
-                  <el-icon><Calendar/></el-icon>
-                  {{ formatFromNow(post.updatedDate) }}
-                </span>
+              <!-- Thumbnail -->
+              <div class="post-thumbnail flex-shrink-0">
+                <img v-lazy="post.thumbnail" :alt="post.title" class="thumbnail-image"/>
               </div>
-              <h2 class="text-xl font-medium hover:text-primary-500 mb-2">
-                {{ post.title }}
-              </h2>
-              <div class="post-tags">
-                <el-tag v-for="tag in post.tags"
-                        :key="tag.id"
-                        size="small"
-                        effect="plain"
-                        class="mr-2">
-                  <el-icon>
-                    <CollectionTag/>
-                  </el-icon>
-                  {{ tag.name }}
-                </el-tag>
+
+              <!-- Existing post content -->
+              <!-- Post Content -->
+              <div class="post-content flex-grow">
+                <div class="post-header mb-2">
+                  <el-tag size="small" type="success" class="category-tag">
+                    {{ post.category.name }}
+                  </el-tag>
+                  <span class="text-gray-500 text-sm ml-2">
+        <el-icon><Calendar/></el-icon>
+        {{ formatFromNow(post.updatedDate) }}
+      </span>
+                </div>
+                <h2 class="text-xl font-medium hover:text-primary-500 mb-2">
+                  {{ post.title }}
+                </h2>
+                <div class="post-tags">
+                  <el-tag v-for="tag in post.tags"
+                          :key="tag.id"
+                          size="small"
+                          effect="plain"
+                          class="mr-2">
+                    <el-icon>
+                      <CollectionTag/>
+                    </el-icon>
+                    {{ tag.name }}
+                  </el-tag>
+                </div>
               </div>
             </article>
           </div>
@@ -125,7 +133,7 @@ export default {
       getPosts(pageRequest).then(result => {
         this.topPosts = result.data.data.content;
       }).catch(error => {
-        ElMessage.error('Failed to load top posts');
+        ElMessage.error('Oops!');
       });
     }
   }
@@ -142,12 +150,14 @@ export default {
 .post-card {
   background: #fff;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .post-item {
   cursor: pointer;
+  display: flex;
+  align-items: flex-start;
 }
 
 .category-tag {
@@ -155,7 +165,7 @@ export default {
 }
 
 .post-tags {
-  margin-top: 1rem;
+  margin-top: 8px;
 }
 
 .top-post-item {
@@ -170,4 +180,25 @@ export default {
 .top-post-content {
   flex: 1;
 }
+
+.post-thumbnail {
+  width: 150px; /* Fixed width */
+  max-height: 100px; /* Fixed height */
+  overflow: clip;
+  border-radius: 5px;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image fills the space without distortion */
+  display: block;
+}
+
+.post-content {
+  flex-grow: 1;
+}
+
 </style>
