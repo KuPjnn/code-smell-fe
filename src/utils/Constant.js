@@ -1,5 +1,5 @@
 export const Constant = {
-    DOWNLOAD_FILE_URL: '/resource-server/api/minio/download',
+    DOWNLOAD_FILE_URL: 'https://img.codesmell.io.vn/insecure/format:avif/plain/s3://code-smell/',
     TOOLBARS: [
         'bold',
         'underline',

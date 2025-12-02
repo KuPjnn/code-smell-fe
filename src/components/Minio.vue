@@ -175,7 +175,7 @@ export default {
           .filter(item => item.isLeaf)
           .map(item => ({
             name: item.fileName.replace(this.folderPath, ''),
-            url: Constant.DOWNLOAD_FILE_URL + "?path=" + item.filePath,
+            url: Constant.DOWNLOAD_FILE_URL + item.filePath,
           }));
     },
     handleNodeClick(node) {
