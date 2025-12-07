@@ -133,6 +133,19 @@ const router = createRouter({
                         },
                     ]
                 },
+                {
+                    path: 'wedding',
+                    children: [
+                        {
+                            path: '',
+                            component: () => import('@/views/admin/wedding/index.vue'),
+                        },
+                        {
+                            path: 'images',
+                            component: () => import('@/views/admin/wedding/images.vue'),
+                        },
+                    ]
+                },
             ]
         },
     ]

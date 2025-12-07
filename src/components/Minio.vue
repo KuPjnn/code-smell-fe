@@ -1,7 +1,13 @@
 <template>
   <el-container class="minio-container">
-    <el-aside width="200px" class="folder-tree">
-      <el-header height="50px" class="content-header">
+    <div class="collapse-button" @click="toggleCollapse">
+      <el-icon>
+        <Expand v-if="isCollapse"/>
+        <Fold v-else/>
+      </el-icon>
+    </div>
+    <el-aside :width="isCollapse ? '0px' : '200px'" class="folder-tree">
+      <el-header height="50px" class="content-header" @click="toggleCollapse">
         <div class="tree-header">
           <el-icon>
             <FolderOpened/>
@@ -30,7 +36,7 @@
     </el-aside>
 
     <el-container>
-      <el-header height="50px" class="content-header">
+      <el-header height="50px" class="content-header" @click="toggleCollapse">
         <div class="breadcrumb">
           <el-icon>
             <FolderOpened/>
@@ -111,13 +117,13 @@
 <script>
 import {deleteFile, getFiles, uploadFile} from "@/api/minio.js";
 import {hideLoading, showLoading} from "@/utils/LoadingService.js";
-import {Folder, FolderOpened, Plus, UploadFilled} from "@element-plus/icons-vue";
+import {Expand, Fold, Folder, FolderOpened, Plus, UploadFilled} from "@element-plus/icons-vue";
 import {Constant} from "@/utils/Constant.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 export default {
   emits: ['select', 'cancel'],
-  components: {FolderOpened, Folder, Plus, UploadFilled},
+  components: {Fold, Expand, FolderOpened, Folder, Plus, UploadFilled},
   props: {
     selectable: {
       type: Boolean,
@@ -133,6 +139,7 @@ export default {
   },
   data() {
     return {
+      isCollapse: false,
       folderPath: '',
       folderTree: [],
       defaultProps: {
@@ -234,7 +241,10 @@ export default {
       if (this.selectedFile) {
         this.$emit('select', this.selectedFile);
       }
-    }
+    },
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse;
+    },
   },
   mounted() {
     showLoading();
@@ -371,4 +381,7 @@ export default {
   margin: 0 auto;
 }
 
+.collapse-button {
+  margin-top: 15px;
+}
 </style>

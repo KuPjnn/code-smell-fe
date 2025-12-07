@@ -16,7 +16,7 @@
 
       <template v-for="item in menuItems" :key="item.index">
         <!-- For items without children -->
-        <el-menu-item v-if="!item.children" :index="item.index" :route="item.index">
+        <el-menu-item v-if="!item.children" :index="item.index" :route="item.index" v-role="item.roles">
           <el-icon>
             <component :is="item.icon"/>
           </el-icon>
@@ -24,7 +24,7 @@
         </el-menu-item>
 
         <!-- For items with children -->
-        <el-sub-menu v-else :index="item.index">
+        <el-sub-menu v-else :index="item.index" v-role="item.roles">
           <template #title>
             <el-icon>
               <component :is="item.icon"/>
@@ -59,23 +59,29 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
+import {ref, watch, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
 
 const route = useRoute()
 const menu = ref(null)
 const isCollapse = ref(false)
 
+const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
 const menuItems = [
   {
     index: '/admin',
     title: 'Dashboard',
-    icon: 'DataLine'
+    icon: 'DataLine',
+    roles: ['user']
   },
   {
     index: '/admin/categories',
     title: 'Categories',
     icon: 'Location',
+    roles: ['admin'],
     children: [
       {index: '/admin/categories', title: 'List'},
       {index: '/admin/categories/create', title: 'Add'}
@@ -85,6 +91,7 @@ const menuItems = [
     index: '/admin/tags',
     title: 'Tags',
     icon: 'CollectionTag',
+    roles: ['admin'],
     children: [
       {index: '/admin/tags', title: 'List'},
       {index: '/admin/tags/create', title: 'Add'}
@@ -94,15 +101,27 @@ const menuItems = [
     index: '/admin/posts',
     title: 'Posts',
     icon: 'Document',
+    roles: ['admin'],
     children: [
       {index: '/admin/posts', title: 'List'},
       {index: '/admin/posts/create', title: 'Add'}
     ]
   },
   {
+    index: '/admin/wedding',
+    title: 'My Wedding',
+    icon: 'GobletSquareFull',
+    roles: ['wedding'],
+    children: [
+      {index: '/admin/wedding', title: 'Invite'},
+      {index: '/admin/wedding/images', title: 'Images'}
+    ]
+  },
+  {
     index: '/admin/files',
     title: 'Files',
-    icon: 'Files'
+    icon: 'Files',
+    roles: ['user'],
   }
 ]
 
@@ -115,6 +134,10 @@ watch(() => route.path, (newPath) => {
 const toggleCollapse = () => {
   isCollapse.value = !isCollapse.value
 }
+
+onMounted(() => {
+  isCollapse.value = isMobileDevice()
+})
 </script>
 
 <style scoped>
