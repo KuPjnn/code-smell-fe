@@ -1,6 +1,7 @@
 kind: pipeline
 type: ssh
 name: deploy
+
 server:
   host:
     from_secret: SSH_HOST
@@ -8,6 +9,7 @@ server:
     from_secret: SSH_USER
   password:
     from_secret: SSH_PASSWORD
+
 steps:
   - name: docker build
     commands:
@@ -15,6 +17,7 @@ steps:
       - docker build -t codesmell-fe:latest .
   - name: docker up
     commands:
+      - cp -r /opt/env/code-smell-fe/.env .env
       - docker compose -f docker-compose.yaml up -d
   - name: remove dangling images
     commands:
