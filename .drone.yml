@@ -13,14 +13,14 @@ server:
 steps:
   - name: generate env
     environment:
-      - VITE_API_URL:
-          from_secret: VITE_API_URL
-      - VITE_BASE_PATH:
-          from_secret: VITE_BASE_PATH
-      - VITE_CASDOOR_CLIENT_ID:
-          from_secret: VITE_CASDOOR_CLIENT_ID
-      - VITE_CASDOOR_URL:
-          from_secret: VITE_CASDOOR_URL
+      VITE_API_URL:
+        from_secret: VITE_API_URL
+      VITE_BASE_PATH:
+        from_secret: VITE_BASE_PATH
+      VITE_CASDOOR_CLIENT_ID:
+        from_secret: VITE_CASDOOR_CLIENT_ID
+      VITE_CASDOOR_URL:
+        from_secret: VITE_CASDOOR_URL
     commands:
       - echo "VITE_API_URL=$VITE_API_URL" > .env
       - echo "VITE_BASE_PATH=$VITE_BASE_PATH" >> .env
