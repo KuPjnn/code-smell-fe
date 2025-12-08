@@ -2,20 +2,6 @@
   <div class="dashboard">
     <!-- Statistics Cards -->
     <stats-overview :stats="statistics"/>
-
-    <!-- Main Content Grid -->
-    <el-row :gutter="20" class="dashboard-grid">
-      <!-- Charts Section -->
-      <el-col :span="16">
-        <recent-posts class="dashboard-card"/>
-      </el-col>
-
-      <!-- Side Widgets -->
-      <el-col :span="8">
-        <quick-actions class="dashboard-card"/>
-        <recent-activities class="dashboard-card"/>
-      </el-col>
-    </el-row>
   </div>
 </template>
 

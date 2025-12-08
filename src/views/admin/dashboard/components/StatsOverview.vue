@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20" class="stats-overview">
-    <el-col :span="6" v-for="(stat, key) in stats" :key="key">
+    <el-col :xs="24" :sm="12" :md="6" v-for="(stat, key) in stats" :key="key" class="text-center mb-4">
       <el-card class="stat-card">
         <div class="stat-content">
           <el-icon class="stat-icon">
