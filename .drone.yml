@@ -13,11 +13,11 @@ server:
 steps:
   - name: docker build
     commands:
+      - cp -r /opt/env/code-smell-fe/.env .env
       - ls -a
       - docker build -t codesmell-fe:latest .
   - name: docker up
     commands:
-      - cp -r /opt/env/code-smell-fe/.env .env
       - docker compose -f docker-compose.yaml up -d
   - name: remove dangling images
     commands:
