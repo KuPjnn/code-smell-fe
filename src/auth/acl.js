@@ -4,8 +4,6 @@ import {createAcl, defineAclRules} from 'vue-simple-acl';
 import router from "@/routers";
 
 const rules = () => defineAclRules(async (setRule) => {
-    const authStore = useAuthStore();
-    await authStore.initUser();
     setRule('admin', (user) => user?.roles?.includes('admin'));
     setRule('user', (user) => user?.roles?.includes('user'));
     setRule('wedding', (user) => user?.roles?.includes('wedding'));
