@@ -3,7 +3,7 @@ import {createApp} from 'vue';
 import {createPinia} from 'pinia'
 import App from '@/App.vue';
 import router from "@/routers";
-import acl, {user} from '@/auth/acl.js';
+import acl from '@/auth/acl.js';
 import ElementPlus from 'element-plus';
 import lazy from '@/utils/Lazy.js';
 import 'element-plus/dist/index.css';
@@ -13,7 +13,7 @@ import {useAuthStore} from "@/store/index.js";
 const app = createApp(App);
 const pinia = createPinia();
 
-app.directive('lazy', lazy)
+app.directive('lazy', lazy);
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
@@ -21,9 +21,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(ElementPlus);
 app.use(pinia);
-app.use(acl);
+await useAuthStore().initUser();
 app.use(router);
-
-useAuthStore().setUserInfo(user);
+app.use(acl);
 
 app.mount('#app');

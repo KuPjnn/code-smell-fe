@@ -1,4 +1,5 @@
 import {defineStore} from "pinia";
+import {getUserInfo} from "@/auth/auth.js";
 
 export const useAuthStore = defineStore("auth", {
     state: () => ({
@@ -14,7 +15,11 @@ export const useAuthStore = defineStore("auth", {
     },
     actions: {
         setUserInfo(user) {
-            this.user = user;
+            if (user)
+                this.user = user;
+        },
+        async initUser() {
+            this.setUserInfo(await getUserInfo());
         },
     },
 });

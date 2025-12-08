@@ -4,7 +4,7 @@ import {getAuthenticationUrl, isAuthenticated, refreshToken} from '@/auth/auth.j
 // Create an Axios instance
 const request = axios.create({
     baseURL: `${import.meta.env.VITE_API_URL}`,
-    timeout: 5000,
+    timeout: 60000,
 });
 
 // Add an interceptor to include the access token in every request

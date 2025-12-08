@@ -1,0 +1,29 @@
+kind: pipeline
+type: ssh
+name: deploy
+server:
+  host:
+    from_secret: SSH_HOST
+  user:
+    from_secret: SSH_USER
+  password:
+    from_secret: SSH_PASSWORD
+steps:
+  - name: docker build
+    commands:
+      - ls -a
+      - docker build -t codesmell-fe:latest .
+  - name: docker up
+    commands:
+      - docker compose -f docker-compose.yaml up -d
+  - name: remove dangling images
+    commands:
+      - docker images --filter "dangling=true" -q | xargs -r docker rmi
+  - name: done
+    commands:
+      - echo "Deploy DONE. "
+trigger:
+  branch:
+    include:
+      - master
+      - develop

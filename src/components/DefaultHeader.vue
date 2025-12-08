@@ -29,9 +29,9 @@
     <el-sub-menu index="/" v-if="isLogin">
       <template #title>
         <el-avatar
-            :src="user.picture"
+            :src="authStore.currentUser.picture"
         />
-        <span>{{ user.name }}</span>
+        <span>{{ authStore.currentUser.name }}</span>
       </template>
       <el-menu-item index="/admin" route="/admin">
         Admin
@@ -56,6 +56,12 @@ import {Constant} from "@/utils/Constant.js";
 import {useAuthStore} from "@/store";
 
 export default {
+  setup() {
+    const authStore = useAuthStore();
+    return {
+      authStore,
+    }
+  },
   computed: {
     Constant() {
       return Constant
@@ -68,7 +74,6 @@ export default {
   data() {
     return {
       isLogin: false,
-      user: useAuthStore().currentUser,
     }
   },
   methods: {

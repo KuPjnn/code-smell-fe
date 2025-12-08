@@ -1,19 +1,18 @@
+import {computed} from "vue";
+import {useAuthStore} from "@/store/index.js";
 import {createAcl, defineAclRules} from 'vue-simple-acl';
 import router from "@/routers";
-import {getUserInfo} from "@/auth/auth.js";
 
-export const user = await getUserInfo();
-
-const rules = () => defineAclRules((setRule) => {
-    if (user && user.roles) {
-        user.roles.forEach(role => {
-            setRule(role, (user) => user.roles && user.roles.includes(role));
-        });
-    }
+const rules = () => defineAclRules(async (setRule) => {
+    const authStore = useAuthStore();
+    await authStore.initUser();
+    setRule('admin', (user) => user?.roles?.includes('admin'));
+    setRule('user', (user) => user?.roles?.includes('user'));
+    setRule('wedding', (user) => user?.roles?.includes('wedding'));
 });
 
 const simpleAcl = createAcl({
-    user, // short for user: user
+    user: computed(() => useAuthStore().currentUser), // short for user: user
     rules, // short for rules: rules
     router, // OPTIONAL, short for router: router
     onDeniedRoute: '/unauthorized',

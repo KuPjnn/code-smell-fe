@@ -8,8 +8,8 @@
   >
     <el-sub-menu index="/admin">
       <template #title>
-        <el-avatar :src="user.picture"/>
-        <span>{{ user.name }}</span>
+        <el-avatar :src="authStore.currentUser.picture"/>
+        <span>{{ authStore.currentUser.name }}</span>
       </template>
       <el-menu-item index="/" @click="logout">
         <span>Logout</span>
@@ -29,10 +29,11 @@ import {Constant} from "../utils/Constant.js";
 import {useAuthStore} from "@/store/index.js";
 
 export default {
-  data() {
+  setup() {
+    const authStore = useAuthStore();
     return {
-      user: useAuthStore().currentUser,
-    };
+      authStore
+    }
   },
   computed: {
     Constant() {
