@@ -1,9 +1,10 @@
 version: '3.8'
 
 services:
-  wedding:
+  codesmell-fe:
     container_name: codesmell-fe
     image: codesmell-fe:latest
+    build: .
     ports:
       - "8008:80"
     restart: unless-stopped
