@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Serve with nginx
-FROM nginx:stable-alpine
+FROM nginx:stable-alpine-slim
 
 # Copy built app from previous stage
 COPY --from=build /app/dist /usr/share/nginx/html

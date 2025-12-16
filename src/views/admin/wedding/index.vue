@@ -18,6 +18,14 @@
       <el-table-column label="Số người" prop="attendeesNo" min-width="120"/>
       <el-table-column label="SĐT/Zalo" prop="phone" min-width="120"/>
       <el-table-column label="Lời chúc" prop="wish" min-width="120" show-overflow-tooltip/>
+      <el-table-column label="Quan hệ" prop="relation" #default="{row}" min-width="120">
+        <span v-if="row.relation === 'BRIDE_FRIEND'">Bạn cô dâu</span>
+        <span v-if="row.relation === 'GROOM_FRIEND'">Bạn chú rể</span>
+      </el-table-column>
+      <el-table-column label="Phương tiện" prop="transportation" #default="{row}" min-width="120">
+        <span v-if="row.transportation === 'SHUTTLE_SERVICE'">Xe đưa đón</span>
+        <span v-if="row.transportation === 'SELF_ARRANGED'">Tự túc</span>
+      </el-table-column>
       <el-table-column label="Ngày gửi" prop="createdDate" min-width="120">
         <template #default="{ row }">
           {{ formatDate(row.createdDate) }}
